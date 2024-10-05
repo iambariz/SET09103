@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, jsonify
+from .raiderConnector import getAllTopCurrentSeasonWorldRuns
 
 # Define the blueprint: 'main_bp'
 main_bp = Blueprint('main', __name__)
@@ -12,3 +13,15 @@ def home():
 @main_bp.route('/about')
 def about():
     return "This is the About page."
+
+# Define the '/test' route to call the RaiderConnector function
+@main_bp.route('/test')
+def test():
+    # Call the function from raiderConnector.py
+    page = 1  # You can change this value based on pagination needs
+
+    # Get data from the Raider API
+    data = getAllTopCurrentSeasonWorldRuns(page)
+
+    # Return the data as JSON
+    return jsonify(data)
