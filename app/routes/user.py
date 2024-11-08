@@ -1,5 +1,8 @@
 from flask import Blueprint, render_template, request, jsonify, render_template, redirect, url_for, flash
 from ..forms import RegistrationForm
+from app.forms import RegistrationForm
+from app.models import User
+from app.extensions import db
 
 # Create a Blueprint instance for user-related routes
 user_bp = Blueprint('user', __name__, url_prefix='/user')
@@ -21,7 +24,23 @@ def login():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        # Process form data, e.g., save the user to the database
-        flash('Registration successful!', 'success')
-        return redirect(url_for('index'))
+        # Check if username or email already exists
+        existing_user = User.query.filter(
+            (User.username == form.username.data) | (User.email == form.email.data)
+        ).first()
+
+        if existing_user:
+            flash('Username or email already taken.', 'error')
+            return render_template('user/register.html', form=form)
+
+        # Create a new user instance
+        new_user = User(username=form.username.data, email=form.email.data)
+        new_user.set_password(form.password.data)  # Hash the password
+
+        db.session.add(new_user)
+        db.session.commit()
+
+        flash('Registration successful! You can now log in.', 'success')
+        return redirect(url_for('user.login'))
+
     return render_template('pages/user/register.html', form=form)
