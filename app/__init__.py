@@ -1,5 +1,5 @@
 # app/__init__.py
-from flask import Flask
+from flask import Flask, render_template
 from .api.internal_api import internal_api_bp  # Import the blueprint
 from .config import Config
 from .extensions import db, migrate
@@ -19,6 +19,6 @@ def create_app():
 
     @app.route('/')
     def index():
-        return "Hello, MealPal!"
-
+        return render_template('index.html')
+    
     return app
