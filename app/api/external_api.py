@@ -24,7 +24,6 @@ def fetch_recipes(ingredients):
         # Return an error message if the API request fails
         return {"error": "Failed to fetch recipes"}
 
-
 def get_sample_return():
     return [
         {

@@ -2,3 +2,4 @@
 __pycache__/
 .env
 get-pip.py
+instance/
