@@ -1,8 +1,9 @@
 from flask import Blueprint, render_template, request, jsonify, render_template, redirect, url_for, flash
 from ..forms import RegistrationForm
-from app.forms import RegistrationForm
+from ..forms import RegistrationForm, LoginForm
 from app.models import User
 from app.extensions import db
+from werkzeug.security import check_password_hash
 
 # Create a Blueprint instance for user-related routes
 user_bp = Blueprint('user', __name__, url_prefix='/user')
@@ -12,13 +13,6 @@ user_bp = Blueprint('user', __name__, url_prefix='/user')
 def profile():
     # Example user profile route
     return render_template('pages/user/profile.html')
-
-@user_bp.route('/login', methods=['POST'])
-def login():
-    # Example login route
-    data = request.get_json()
-    # Authenticate user here...
-    return jsonify({"message": "User logged in!"})
 
 @user_bp.route('/register', methods=['GET', 'POST'])
 def register():
@@ -44,3 +38,23 @@ def register():
         return redirect(url_for('user.login'))
 
     return render_template('pages/user/register.html', form=form)
+
+
+@user_bp.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        # Find the user by email
+        user = User.query.filter_by(email=form.email.data).first()
+
+        # Check if user exists and password matches
+        if user and check_password_hash(user.password_hash, form.password.data):
+            flash('Login successful!', 'success')
+
+            #Todo: Session management
+
+            return redirect(url_for('user.profile'))
+        else:
+            flash('Invalid email or password.', 'error')
+
+    return render_template('pages/user/login.html', form=form)

@@ -1,0 +1,23 @@
+{% extends "_base.html" %}
+
+{% block title %}Login - MealPal{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto p-6 bg-white shadow-md rounded">
+    <h2 class="text-2xl font-bold mb-4">Log In</h2>
+    <form method="POST" action="{{ url_for('user.login') }}">
+        {{ form.hidden_tag() }}
+        <div class="mb-4">
+            {{ form.email.label(class="block text-gray-700") }}
+            {{ form.email(class="form-input mt-1 block w-full") }}
+        </div>
+        <div class="mb-4">
+            {{ form.password.label(class="block text-gray-700") }}
+            {{ form.password(class="form-input mt-1 block w-full") }}
+        </div>
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Log In
+        </button>
+    </form>
+</div>
+{% endblock %}
