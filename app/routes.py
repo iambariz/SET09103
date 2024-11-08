@@ -24,3 +24,12 @@ def test():
 
     # Return the data as JSON
     return jsonify(data)
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        # Process form data, e.g., save the user to the database
+        flash('Registration successful!', 'success')
+        return redirect(url_for('index'))
+    return render_template('register.html', form=form)
