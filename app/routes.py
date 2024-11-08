@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, jsonify
-from .raiderConnector import getAllTopCurrentSeasonWorldRuns
 
 # Define the blueprint: 'main_bp'
 main_bp = Blueprint('main', __name__)
@@ -21,7 +20,7 @@ def test():
     page = 1  # You can change this value based on pagination needs
 
     # Get data from the Raider API
-    data = getAllTopCurrentSeasonWorldRuns(page)
+    data = "test"
 
     # Return the data as JSON
     return jsonify(data)
