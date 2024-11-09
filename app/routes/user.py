@@ -1,18 +1,21 @@
-from flask import Blueprint, render_template, request, jsonify, render_template, redirect, url_for, flash
+from flask import Blueprint, render_template, request, jsonify, render_template, redirect, url_for, flash, session
 from ..forms import RegistrationForm
 from ..forms import RegistrationForm, LoginForm
 from app.models import User
 from app.extensions import db
 from werkzeug.security import check_password_hash
+from app.utils.decorators import login_required  # Import the decorator
 
 # Create a Blueprint instance for user-related routes
 user_bp = Blueprint('user', __name__, url_prefix='/user')
 
 # Define user-specific routes within this blueprint
 @user_bp.route('/profile', methods=['GET'])
+@login_required
 def profile():
-    # Example user profile route
-    return render_template('pages/user/profile.html')
+
+    user = User.query.get(session['user_id'])
+    return render_template('pages/user/profile.html', user=user)
 
 @user_bp.route('/register', methods=['GET', 'POST'])
 def register():
@@ -52,9 +55,17 @@ def login():
             flash('Login successful!', 'success')
 
             #Todo: Session management
+            session['user_id'] = user.id
+            session['username'] = user.username
 
             return redirect(url_for('user.profile'))
         else:
             flash('Invalid email or password.', 'error')
 
     return render_template('pages/user/login.html', form=form)
+
+@user_bp.route('/logout')
+def logout():
+    session.clear()
+    flash('You have been logged out.', 'info')
+    return redirect(url_for('user.login'))
