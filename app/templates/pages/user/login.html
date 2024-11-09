@@ -5,7 +5,7 @@
 {% block content %}
 <div class="max-w-md mx-auto p-6 bg-white shadow-md rounded">
     <h2 class="text-2xl font-bold mb-4">Log In</h2>
-    <form method="POST" action="{{ url_for('user.login') }}">
+    <form method="POST" action="{{ url_for('auth.login') }}">
         {{ form.hidden_tag() }}
         <div class="mb-4">
             {{ form.email.label(class="block text-gray-700") }}

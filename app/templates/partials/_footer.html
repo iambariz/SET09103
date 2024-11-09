@@ -1,4 +1,22 @@
 <!-- app/templates/partials/_footer.html -->
-<footer class="bg-blue-600 text-white p-4 mt-10">
-    <p>&copy; 2024 MealPal</p>
+<footer class="bg-primary-600 text-white py-4 mt-10 text-white-0 text-sm relative">
+    <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+        <!-- Links Section -->
+        <div class="flex flex-col">
+            <a href="{{ url_for('main.index') }}" class="text-white  hover:text-secondary-400">Home</a>
+            <a href="{{ url_for('main.privacy') }}" class="text-white  hover:text-secondary-400">Privacy</a>
+
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('auth.logout') }}" class="text-white  hover:text-secondary-400">Logout</a>
+            {% else %}
+                <a href="{{ url_for('auth.login') }}" class="text-white  hover:text-secondary-400">Login</a>
+                <a href="{{ url_for('auth.register') }}" class="text-white  hover:text-secondary-400">Register</a>
+            {% endif %}
+        </div>
+
+        <!-- Copyright Section -->
+        <div class="text-[10px] text-center mt-4 absolute bottom-1 right-1/2 translate-x-1/2">
+            &copy; 2024 MealPal
+        </div>
+    </div>
 </footer>

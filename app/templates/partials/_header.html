@@ -21,9 +21,9 @@
           <span class="text-sm">{{ current_user.email }}</span>
           <a href="{{ url_for('logout') }}" class="hover:text-secondary-400 ml-4">Logout</a>
         {% else %}
-          <!-- Logged Out: Show user.login and user.register Links -->
-          <a href="{{ url_for('user.login') }}" class="hover:text-secondary-400">Login</a>
-          <a href="{{ url_for('user.register') }}" class="hover:text-secondary-400">Register</a>
+          <!-- Logged Out: Show auth.login and user.register Links -->
+          <a href="{{ url_for('auth.login') }}" class="hover:text-secondary-400">Login</a>
+          <a href="{{ url_for('auth.register') }}" class="hover:text-secondary-400">Register</a>
         {% endif %}
       </div>
   
@@ -41,10 +41,10 @@
       <!-- Authentication Links in Mobile -->
       {% if current_user.is_authenticated %}
         <span class="text-sm">{{ current_user.email }}</span>
-        <a href="{{ url_for('logout') }}" class="hover:text-secondary-400">Logout</a>
+        <a href="{{ url_for('auth.logout') }}" class="hover:text-secondary-400">Logout</a>
       {% else %}
-        <a href="{{ url_for('user.login') }}" class="hover:text-secondary-400">Login</a>
-        <a href="{{ url_for('user.register') }}" class="hover:text-secondary-400">Regiser</a>
+        <a href="{{ url_for('auth.login') }}" class="hover:text-secondary-400">Login</a>
+        <a href="{{ url_for('auth.register') }}" class="hover:text-secondary-400">Regiser</a>
       {% endif %}
     </div>
   </nav>
