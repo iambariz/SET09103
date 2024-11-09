@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400&family=Poppins:wght@500&display=swap');
+
+*{
+    font-family: 'Lato', sans-serif;
+}
+
+body {
+    @apply min-h-screen; /* This uses Tailwind's built-in min-h-screen utility */
+  }
+

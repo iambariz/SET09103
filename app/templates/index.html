@@ -4,8 +4,30 @@
 {% block title %}Home - MealPal{% endblock %}
 
 {% block content %}
-    <div class="text-center py-10">
-        <h1 class="text-4xl font-bold text-blue-600">Welcome to MealPal</h1>
-        <p class="mt-4 text-lg text-gray-700">Plan your meals with ease by finding recipes based on your ingredients.</p>
+    <div class="text-center py-20">
+
+
+        <!-- Search bar starts -->
+        <h1 class="text-4xl font-medium text-primary-600 ">What's in your kitchen?</h1>
+        <div class="mt-2 border-2 mx-auto max-w-[750px] bg-white-600 border-primary-600 rounded-lg flex flex-row justify-between">
+            <!-- Items zone -->
+             <div class="m-2 flex flex-row">
+                <div class="rounded-lg py-2 px-5 bg-white-700 text-primary-600 relative text-medium">
+                    <span>Eggs</span>
+                    <i class="fas fa-times cursor-pointer font-weight-500 absolute text-sm top-1 right-1" class="remove-ingredient"></i>
+                </div>
+                <input class="ml-2 bg-white-600 border-primary-600 focus:outline-none focus:border-none" type="text">
+             </div>
+             <!-- Buttons -->
+            <div class="flex flex-row justify-center text-secondary-500 bg-primary-600 text-xl" id="recipe-add">
+                <div class="flex justify-center items-center w-[55px] cursor-pointer border-r-2 border-r-primary-300">
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="flex justify-center items-center w-[55px] cursor-pointer" id="recipe-search">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+        </div>
+        <!-- Search bar finishes -->
     </div>
 {% endblock %}
