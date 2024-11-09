@@ -1,0 +1,26 @@
+<!-- app/templates/pages/user/profile.html -->
+{% extends "_base.html" %}
+
+{% block title %}Profile - MealPal{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto p-6 bg-white shadow-md rounded">
+    <h2 class="text-2xl font-bold mb-4">Your Profile</h2>
+
+    <div class="mb-4">
+        <label class="block text-gray-700">Username:</label>
+        <p>{{ user.username }}</p>
+    </div>
+
+    <div class="mb-4">
+        <label class="block text-gray-700">Email:</label>
+        <p>{{ user.email }}</p>
+    </div>
+
+    <div class="mt-6">
+        <a href="{{ url_for('user.logout') }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+            Log Out
+        </a>
+    </div>
+</div>
+{% endblock %}
