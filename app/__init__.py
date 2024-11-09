@@ -3,7 +3,7 @@ from flask import Flask, render_template
 from .api.internal_api import internal_api_bp  # Import the blueprint
 from .config import Config
 from .extensions import db, migrate
-from .routes.user import user_bp
+from .routes.auth import auth_bp
 
 
 def create_app():
@@ -16,10 +16,6 @@ def create_app():
 
     # Register the blueprint
     app.register_blueprint(internal_api_bp)
-    app.register_blueprint(user_bp)
+    app.register_blueprint(auth_bp)
     
-    @app.route('/')
-    def index():
-        return render_template('index.html')
-
     return app

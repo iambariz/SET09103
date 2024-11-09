@@ -1,6 +1,47 @@
-<header class="bg-blue-600 text-white p-4">
-    <h1 class="text-2xl font-bold">MealPal</h1>
-    <nav>
-        <a href="{{ url_for('index') }}" class="mr-4">Home</a>
-    </nav>
-</header>
+<!-- Navbar -->
+<nav class="bg-primary-500 text-white px-4 py-3 shadow-md">
+    <div class="container mx-auto flex justify-between items-center">
+      <!-- Logo -->
+      <a href="{{ url_for('index') }}" class="text-xl font-semibold">MealPal</a>
+  
+      <!-- Desktop Links -->
+      <div class="hidden md:flex space-x-6 items-center">
+        <a href="{{ url_for('index') }}" class="hover:text-secondary-400">Home</a>
+        <a href="#" class="hover:text-secondary-400">My Recipes</a>
+      </div>
+  
+      <!-- Right Side: Authentication Links or Email -->
+      <div class="hidden md:flex items-center space-x-4">
+        {% if current_user.is_authenticated %}
+          <!-- Logged In: Show Email and Logout -->
+          <span class="text-sm">{{ current_user.email }}</span>
+          <a href="{{ url_for('logout') }}" class="hover:text-secondary-400 ml-4">Logout</a>
+        {% else %}
+          <!-- Logged Out: Show Login and Register Links -->
+          <a href="{{ url_for('login') }}" class="hover:text-secondary-400">Login</a>
+          <a href="{{ url_for('register') }}" class="hover:text-secondary-400">Register</a>
+        {% endif %}
+      </div>
+  
+      <!-- Mobile Menu Button -->
+      <button id="menu-toggle" class="md:hidden focus:outline-none">
+        <i class="fas fa-bars text-2xl"></i>
+      </button>
+    </div>
+  
+    <!-- Mobile Menu (Hidden by default) -->
+    <div id="mobile-menu" class="hidden md:hidden flex-col mt-2 space-y-2 bg-primary-400 p-4 rounded-lg">
+      <a href="{{ url_for('index') }}" class="hover:text-secondary-400">Home</a>
+      <a href="#" class="hover:text-secondary-400">My Recipes</a>
+  
+      <!-- Authentication Links in Mobile -->
+      {% if current_user.is_authenticated %}
+        <span class="text-sm">{{ current_user.email }}</span>
+        <a href="{{ url_for('logout') }}" class="hover:text-secondary-400">Logout</a>
+      {% else %}
+        <a href="{{ url_for('login') }}" class="hover:text-secondary-400">Login</a>
+        <a href="{{ url_for('register') }}" class="hover:text-secondary-400">Register</a>
+      {% endif %}
+    </div>
+  </nav>
+  
