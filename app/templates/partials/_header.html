@@ -1,14 +1,18 @@
 <!-- Navbar -->
-<nav class="bg-primary-500 text-white px-4 py-3 shadow-md">
-    <div class="container mx-auto flex justify-between items-center">
-      <!-- Logo -->
-      <a href="{{ url_for('index') }}" class="text-xl font-semibold">MealPal</a>
-  
-      <!-- Desktop Links -->
-      <div class="hidden md:flex space-x-6 items-center">
-        <a href="{{ url_for('index') }}" class="hover:text-secondary-400">Home</a>
-        <a href="#" class="hover:text-secondary-400">My Recipes</a>
+<nav class="bg-primary-600 text-white px-4 py-3 shadow-md">
+    <div class="container mx-auto flex justify-between items-center text-white-0">
+
+      <div class="flex justify-center">
+        <!-- Logo -->
+        <a href="{{ url_for('main.index') }}" class="text-2xl font-semibold uppercase text-white-0 underline decoration-secondary-400 underline-offset-4 mr-8">Meal<span class="text-secondary-400">PAL</span></a>
+    
+        <!-- Desktop Links -->
+        <div class="hidden md:flex space-x-6 items-center">
+          <a href="{{ url_for('main.index') }}" class="hover:text-secondary-400">Home</a>
+          <a href="#" class="hover:text-secondary-400">My Recipes</a>
+        </div>
       </div>
+
   
       <!-- Right Side: Authentication Links or Email -->
       <div class="hidden md:flex items-center space-x-4">
@@ -17,9 +21,9 @@
           <span class="text-sm">{{ current_user.email }}</span>
           <a href="{{ url_for('logout') }}" class="hover:text-secondary-400 ml-4">Logout</a>
         {% else %}
-          <!-- Logged Out: Show Login and Register Links -->
-          <a href="{{ url_for('login') }}" class="hover:text-secondary-400">Login</a>
-          <a href="{{ url_for('register') }}" class="hover:text-secondary-400">Register</a>
+          <!-- Logged Out: Show user.login and user.register Links -->
+          <a href="{{ url_for('user.login') }}" class="hover:text-secondary-400">Login</a>
+          <a href="{{ url_for('user.register') }}" class="hover:text-secondary-400">Register</a>
         {% endif %}
       </div>
   
@@ -31,7 +35,7 @@
   
     <!-- Mobile Menu (Hidden by default) -->
     <div id="mobile-menu" class="hidden md:hidden flex-col mt-2 space-y-2 bg-primary-400 p-4 rounded-lg">
-      <a href="{{ url_for('index') }}" class="hover:text-secondary-400">Home</a>
+      <a href="{{ url_for('main.index') }}" class="hover:text-secondary-400">Home</a>
       <a href="#" class="hover:text-secondary-400">My Recipes</a>
   
       <!-- Authentication Links in Mobile -->
@@ -39,8 +43,8 @@
         <span class="text-sm">{{ current_user.email }}</span>
         <a href="{{ url_for('logout') }}" class="hover:text-secondary-400">Logout</a>
       {% else %}
-        <a href="{{ url_for('login') }}" class="hover:text-secondary-400">Login</a>
-        <a href="{{ url_for('register') }}" class="hover:text-secondary-400">Register</a>
+        <a href="{{ url_for('user.login') }}" class="hover:text-secondary-400">Login</a>
+        <a href="{{ url_for('user.register') }}" class="hover:text-secondary-400">Regiser</a>
       {% endif %}
     </div>
   </nav>
