@@ -19,7 +19,7 @@
         {% if current_user.is_authenticated %}
           <!-- Logged In: Show Email and Logout -->
           <span class="text-sm">{{ current_user.email }}</span>
-          <a href="{{ url_for('logout') }}" class="hover:text-secondary-400 ml-4">Logout</a>
+          <a href="{{ url_for('auth.logout') }}" class="hover:text-secondary-400 ml-4">Logout</a>
         {% else %}
           <!-- Logged Out: Show auth.login and user.register Links -->
           <a href="{{ url_for('auth.login') }}" class="hover:text-secondary-400">Login</a>

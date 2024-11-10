@@ -1,21 +1,33 @@
 from flask import Blueprint, render_template, request, jsonify, render_template, redirect, url_for, flash, session
-from ..forms import RegistrationForm
-from ..forms import RegistrationForm, LoginForm
+from ..forms import RegistrationForm, LoginForm, ProfileUpdateForm
 from app.models import User
 from app.extensions import db
 from werkzeug.security import check_password_hash
 from app.utils.decorators import login_required  # Import the decorator
+from flask_login import login_required, current_user, login_user
 
 # Create a Blueprint instance for user-related routes
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 
-# Define user-specific routes within this blueprint
 @auth_bp.route('/profile', methods=['GET'])
 @login_required
 def profile():
+    form = ProfileUpdateForm(obj=current_user)
 
-    user = User.query.get(session['user_id'])
-    return render_template('pages/user/profile.html', user=user)
+    if form.validate_on_submit():
+        # Update user details
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+
+        # Update password only if fields are filled out
+        if form.old_password.data and form.new_password.data == form.repeat_password.data:
+            current_user.set_password(form.new_password.data)
+
+        db.session.commit()
+        flash("Profile updated successfully!", "success")
+
+    return render_template('pages/user/profile.html', form=form, user=current_user)
+
 
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
@@ -57,15 +69,15 @@ def login():
         # Check if user exists and password matches
         if user and check_password_hash(user.password_hash, form.password.data):
             flash('Login successful!', 'success')
-
-            session['user_id'] = user.id
-            session['username'] = user.username
+            # Use flask_login's login_user instead of manually managing session
+            login_user(user)
 
             return redirect(url_for('auth.profile'))
         else:
             flash('Invalid email or password.', 'error')
 
     return render_template('pages/user/login.html', form=form)
+
 
 @auth_bp.route('/logout')
 def logout():
