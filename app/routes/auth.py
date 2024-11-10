@@ -16,7 +16,6 @@ def profile():
 
     if form.validate_on_submit():
         # Update user details
-        current_user.username = form.username.data
         current_user.email = form.email.data
 
         # Update password only if fields are filled out
@@ -33,9 +32,9 @@ def profile():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        # Check if username or email already exists
+        # Check if email already exists
         existing_user = User.query.filter(
-            (User.username == form.username.data) | (User.email == form.email.data)
+            (User.email == form.email.data)
         ).first()
 
         if form.password.data != form.confirm_password.data:
@@ -43,7 +42,7 @@ def register():
             return render_template('user/register.html', form=form)
 
         if existing_user:
-            flash('Username or email already taken.', 'error')
+            flash('Email already taken.', 'error')
             return render_template('user/register.html', form=form)
 
         # Create a new user instance
