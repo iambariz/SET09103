@@ -13,12 +13,12 @@
     </div>
 
     <div class="mb-4">
-        <label class="block text-gray-700">Email:</label>
+        <label class="block text-gray-700">Email address</label>
         <p>{{ user.email }}</p>
     </div>
 
     <div class="mt-6">
-        <a href="{{ url_for('user.logout') }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+        <a href="{{ url_for('auth.logout') }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
             Log Out
         </a>
     </div>

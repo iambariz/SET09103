@@ -26,6 +26,10 @@ def register():
             (User.username == form.username.data) | (User.email == form.email.data)
         ).first()
 
+        if form.password.data != form.confirm_password.data:
+            flash('Passwords do not match.', 'error')
+            return render_template('user/register.html', form=form)
+
         if existing_user:
             flash('Username or email already taken.', 'error')
             return render_template('user/register.html', form=form)
@@ -57,7 +61,7 @@ def login():
             session['user_id'] = user.id
             session['username'] = user.username
 
-            return redirect(url_for('user.profile'))
+            return redirect(url_for('auth.profile'))
         else:
             flash('Invalid email or password.', 'error')
 

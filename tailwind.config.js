@@ -1,4 +1,3 @@
-// tailwind.config.js
 module.exports = {
   content: [
     './app/templates/**/*.html',
@@ -7,6 +6,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Lato', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
+      },
       colors: {
         primary: {
           50: '#EBEDF2',
