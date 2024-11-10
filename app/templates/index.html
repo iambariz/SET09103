@@ -10,18 +10,12 @@
         <!-- Search bar starts -->
          <div class="container">
             <h1 class="text-4xl font-normal text-primary-600 ">What's in your kitchen?</h1>
-            <div class="mt-2 border-2 mx-auto max-w-[750px] bg-white-600 border-primary-600 rounded-lg flex flex-row justify-between">
+            <div class="mt-2 border-2 mx-auto max-w-[750px] bg-white-600 h-10 border-primary-600 rounded-lg flex flex-row justify-between">
                 <!-- Items zone -->
-                 <div class="m-2 flex flex-row">
-                    <div class="rounded-lg py-2 px-5 bg-white-700 text-primary-600 relative text-medium">
-                        <span>Eggs</span>
-                        <i class="fas fa-times cursor-pointer font-weight-500 absolute text-sm top-1 right-1" class="remove-ingredient"></i>
-                    </div>
-                    <input class="ml-2 bg-white-600 border-primary-600 focus:outline-none focus:border-none" type="text">
-                 </div>
+                <input class="ml-2 bg-white-600 border-primary-600 focus:outline-none focus:border-none" type="text" id="ingredient-input">
                  <!-- Buttons -->
                 <div class="flex flex-row justify-center text-secondary-500 bg-primary-600 text-xl" id="recipe-add">
-                    <div class="flex justify-center items-center w-[55px] cursor-pointer border-r-2 border-r-primary-300">
+                    <div class="flex justify-center items-center w-[55px] cursor-pointer border-r-2 border-r-primary-300" id="add-ingredient-btn">
                         <i class="fas fa-plus"></i>
                     </div>
                     <div class="flex justify-center items-center w-[55px] cursor-pointer" id="recipe-search">
@@ -32,6 +26,16 @@
          </div>
         <!-- Search bar finishes -->
 
+        <!-- Ingredients starts -->
+
+        <div class="m-2 flex flex-row gap-x-2" id="ingredients-container">
+            <div class="rounded-lg py-2 px-5 bg-secondary-500 text-primary-600 relative text-medium">
+                <span>Eggs</span>
+                <i class="fas fa-times cursor-pointer font-weight-500 absolute text-sm top-1 right-1" class="remove-ingredient"></i>
+            </div>
+         </div>
+
+        <!-- Ingredients finishes -->
 
         <!-- Recipes starts -->
          <div class="container-2xl pt-20">
@@ -43,14 +47,13 @@
                     <div  class="max-w-[300px] w-100 max-h-[185px] h-full w-full">
                         <img class="object-cover rounded-t-md" src="https://via.placeholder.com/500x300">
                     </div>
-                    <div class="text-left mx-2 ">
-                        <h3 class="text-2xl text-primary-600 font-medium">Food name</h3>
-                        <div>
+                    <div class="text-left m-2 ">
+                        <h3 class="text-2xl text-primary-600 font-medium pb-3">Food name</h3>
+                        <div class="mr-[2rem]">
                             <!-- tags like vegan, vegetarian, etc -->
                             <span class="px-2 py-1 bg-primary-500 text-white-100 rounded-lg text-xs font-normal">Vegetarian</span>
                             <span class="px-2 py-1 bg-primary-500 text-white-100 rounded-lg text-xs font-normal">Breakfast</span>
                         </div>
-                        <p class="text-sm mt-4 pb-6">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit tempore vero nam dolorum repellat deserunt itaque quasi vitae iusto. Animi incidunt quaerat mollitia perferendis similique ullam, sint libero veniam magni.</p>
                     </div>
                     <a href='#' class="text-primary-800 absolute text-2xl right-1 top-1">
                         <i class="fa-regular fa-heart"></i>
@@ -65,4 +68,8 @@
 
         <!-- Recipes ends -->
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 {% endblock %}
