@@ -46,7 +46,7 @@ def register():
             return render_template('user/register.html', form=form)
 
         # Create a new user instance
-        new_user = User(username=form.username.data, email=form.email.data)
+        new_user = User(email=form.email.data)
         new_user.set_password(form.password.data)  # Hash the password
 
         db.session.add(new_user)

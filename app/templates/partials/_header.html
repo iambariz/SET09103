@@ -18,7 +18,10 @@
       <div class="hidden md:flex items-center space-x-4">
         {% if current_user.is_authenticated %}
           <!-- Logged In: Show Email and Logout -->
-          <span class="text-sm">{{ current_user.email }}</span>
+          <span class="text-sm">
+            Hello, 
+            <a href="{{ url_for('auth.profile') }}"" class="text-sm text-secondary-400 font-medium">{{ current_user.email }}</span>
+          </span>
           <a href="{{ url_for('auth.logout') }}" class="hover:text-secondary-400 ml-4">Logout</a>
         {% else %}
           <!-- Logged Out: Show auth.login and user.register Links -->
