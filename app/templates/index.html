@@ -12,7 +12,7 @@
             <h1 class="text-4xl font-normal text-primary-600 ">What's in your kitchen?</h1>
             <div class="mt-2 border-2 mx-auto max-w-[750px] bg-white-600 h-10 border-primary-600 rounded-lg flex flex-row justify-between">
                 <!-- Items zone -->
-                <input class="ml-2 bg-white-600 border-primary-600 focus:outline-none focus:border-none" type="text" id="ingredient-input">
+                <input placeholder="Type in an ingredient" class="ml-2 bg-white-600 border-primary-600 focus:outline-none focus:border-none" type="text" id="ingredient-input">
                  <!-- Buttons -->
                 <div class="flex flex-row justify-center text-secondary-500 bg-primary-600 text-xl" id="recipe-add">
                     <div class="flex justify-center items-center w-[55px] cursor-pointer border-r-2 border-r-primary-300" id="add-ingredient-btn">
@@ -29,10 +29,10 @@
         <!-- Ingredients starts -->
 
         <div class="m-2 flex flex-row gap-x-2" id="ingredients-container">
-            <div class="rounded-lg py-2 px-5 bg-secondary-500 text-primary-600 relative text-medium">
+            <!-- <div class="rounded-lg py-2 px-5 bg-secondary-500 text-primary-600 relative text-medium">
                 <span>Eggs</span>
                 <i class="fas fa-times cursor-pointer font-weight-500 absolute text-sm top-1 right-1" class="remove-ingredient"></i>
-            </div>
+            </div> -->
          </div>
 
         <!-- Ingredients finishes -->
@@ -42,7 +42,7 @@
             <h2 class="text-left pb-4 text-3xl text-primary-500 font-medium">Handpicked recipes for you</h2>
 
             <!-- Recipe container starts -->
-            <div class="flex flex-row flex-wrap">
+            <div class="flex flex-row flex-wrap" id="recipe-results">
                 <div class="flex flex-col border-2 border-primary-500 rounded-md max-w-[300px] relative">
                     <div  class="max-w-[300px] w-100 max-h-[185px] h-full w-full">
                         <img class="object-cover rounded-t-md" src="https://via.placeholder.com/500x300">
