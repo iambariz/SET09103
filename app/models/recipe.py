@@ -1,5 +1,6 @@
 import json
 from ..extensions import db
+from .associations import folder_recipe_association
 
 class Recipe(db.Model):
     __tablename__ = 'recipes'
@@ -15,6 +16,8 @@ class Recipe(db.Model):
     dish_types = db.Column(db.Text, nullable=True)  # Store as JSON string
     ingredients = db.Column(db.Text, nullable=True) # Store as JSON string
     stored_at = db.Column(db.DateTime, nullable=False)
+
+    folders = db.relationship('Folder', secondary=folder_recipe_association, back_populates='recipes')
 
     @property
     def dish_types_list(self):
