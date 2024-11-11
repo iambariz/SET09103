@@ -23,10 +23,12 @@
             </div>
         {% endif %}
     {% endwith %}
+    <div class="flex flex-1 w-full h-full relative">
+        <main class="container mx-auto p-4 flex-grow flex-1 height-100 ">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
 
-    <main class="container mx-auto p-4 flex-grow">
-        {% block content %}{% endblock %}
-    </main>
 
     {% include 'partials/_footer.html' %}
 
