@@ -1,0 +1,18 @@
+<div class="px-4 rounded-lg flex flex-col h-64 py-2 max-w-64 w-full border-2 border-primary-600 justify-between">
+    <div>
+        <i class="fas fa-folder text-[70px] text-primary-500 py-4"></i>
+        <div class="text-left flex flex-col">
+            <span class="text-xl font-medium">{{ folder.name }}</span>
+            <span class="text-xs text-gray-500 mt-0">{{ folder.recipes|length }} recipes</span>
+        </div>
+    </div>
+    <div class="flex flex-row justify-between">
+        <div>
+            <a href="{{ url_for('folders.folder_detail', id=folder.id) }}" class="btn btn-primary">View</a>
+            <a href="{{ url_for('folders.folder_edit', id=folder.id) }}" class="btn btn-primary-alt">Edit</a>
+        </div>
+        <div>
+            <a href="{{ url_for('folders.folder_delete', id=folder.id) }}" class="btn btn-danger">Delete</a>
+        </div>
+    </div>
+</div>

@@ -1,24 +1,25 @@
 {% extends "_base.html" %}
 
-{% block title %}Create Folder - MealPal{% endblock %}
+{% block title %}{{ folder.name if folder else "Create Folder" }} - MealPal{% endblock %}
 
 {% block content %}
     <div class="form-container">
-        <h1 class="text-center text-2xl text-primary-600 pt-10">Create folder</h1>
-        <form method="POST" action="{{ url_for('folders.folder_create') }}">
-        <div class="flex mx-4 flex-wrap flex-col w-full justify-center pt-8">
-            {{ form.hidden_tag() }}
-
-            <div class="mb-4">
-                {{ form.name.label(class="block") }}
-                {{ form.name(class="form-input mt-1 block w-full") }}
+        <h1 class="text-center text-2xl text-primary-600 pt-10">
+            {{ "Edit Folder" if folder else "Create Folder" }}
+        </h1>
+        <form method="POST" action="{{ url_for('folders.folder_edit', id=folder.id) if folder else url_for('folders.folder_create') }}">
+            <div class="flex mx-4 flex-wrap flex-col w-full justify-center pt-8">
+                {{ form.hidden_tag() }}
+                <div class="mb-4">
+                    {{ form.name.label(class="block") }}
+                    {{ form.name(class="form-input mt-1 block w-full") }}
+                </div>
+                <div class="flex flex-col justify-center items-center">
+                    <button type="submit" class="btn">
+                        {{ "Save Changes" if folder else "Create Folder" }}
+                    </button>
+                </div>
             </div>
-            <div class="flex flex-col justify-center items-center">
-                <button type="submit" class="btn">
-                    Create folder
-                </button>
-            </div>
-        </div>
         </form>
     </div>
 {% endblock %}

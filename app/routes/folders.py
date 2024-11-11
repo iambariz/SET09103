@@ -10,7 +10,8 @@ folders_bp = Blueprint('folders', __name__, url_prefix='/folders')
 @folders_bp.route('/', methods=['GET'])
 @login_required
 def folder_index():
-    return render_template('pages/folder/index.html', user=current_user)
+    folders = Folder.query.filter_by(user_id=current_user.id).all()
+    return render_template('pages/folder/index.html', user=current_user, folders=folders)
 
 @folders_bp.route('/create', methods=['GET', 'POST'])
 @login_required
@@ -36,4 +37,27 @@ def folder_create():
 @login_required
 def folder_detail(id):
     folder = Folder.query.get_or_404(id)
-    return render_template('pages/folder/detail.html', folder=folder)
+    return render_template('pages/folder/folder.html', folder=folder)
+
+@folders_bp.route('/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+def folder_edit(id):
+    folder = Folder.query.get_or_404(id)
+    form = FolderCreateForm(obj=folder)  # Pre-populate with existing data
+
+    if form.validate_on_submit():
+        # Update folder data with form data
+        folder.name = form.name.data
+        db.session.commit()
+        return redirect(url_for('folders.folder_detail', id=folder.id))
+
+    # Render the same template as 'create' but passing 'form' and 'folder'
+    return render_template('pages/folder/create.html', form=form, folder=folder)
+
+
+@folders_bp.route('/delete/<int:id>', methods=['POST'])
+@login_required
+def folder_delete(id):
+    folder = Folder.query.get_or_404(id)
+    db.session.delete(folder)
+    db.session.commit()

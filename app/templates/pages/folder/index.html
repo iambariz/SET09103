@@ -5,45 +5,15 @@
 {% block content %}
     <div>
         <h1 class="text-center text-2xl text-primary-600 pt-10">My folders</hh1>
-        <div class="flex mx-4 gap-8 flex-wrap flex-row w-full justify-center pt-8">
-            <div class="px-4 rounded-lg flex flex-col h-64 py-2 max-w-64 w-full border-2 border-primary-600 justify-between">
-                <div>
-                    <i class="fas fa-folder text-[70px] text-primary-500 py-4"></i>
-                    <div class="text-left flex flex-col">
-                        <span class="text-xl font-medium">Foldername</span>
-                        <span class="text-xs text-gray-500 mt-0">3 recipes</span>
-                    </div>
-                </div>
-                <div class="flex flex-row justify-between">
-                    <div>
-                        <a href="#" class="btn btn-primary">View</a>
-                        <a href="#" class="btn btn-primary-alt">Edit</a>
-                    </div>
-                    <div>
-                        <a href="#" class="btn btn-danger">Delete</a>
-                    </div>
-                </div>
-            </div><div class="px-4 rounded-lg flex flex-col h-64 py-2 max-w-64 w-full border-2 border-primary-600 justify-between">
-                <div>
-                    <i class="fas fa-folder text-[70px] text-primary-500 py-4"></i>
-                    <div class="text-left flex flex-col">
-                        <span class="text-xl font-medium">Foldername</span>
-                        <span class="text-xs text-gray-500 mt-0">3 recipes</span>
-                    </div>
-                </div>
-                <div class="flex flex-row justify-between">
-                    <div>
-                        <a href="#" class="btn btn-primary">View</a>
-                        <a href="#" class="btn btn-primary-alt">Edit</a>
-                    </div>
-                    <div>
-                        <a href="#" class="btn btn-danger">Delete</a>
-                    </div>
-                </div>
-            </div>
+        <div class="flex flex-wrap flex-row w-full justify-center pt-8 gap-x-4">
+            {% for folder in folders %}
+                {% include 'partials/_folder.html' %}
+            {% else %}
+                <p class="text-center text-gray-500">No folders available.</p>
+            {% endfor %}
         </div>
     </div>
     <a href="{{ url_for('folders.folder_create')}}" class="absolute bottom-4 flex justify-center items-center text-white-0 text-3xl right-4 bg-primary-600 text-white rounded-full w-[65px] h-[65px] shadow-lg hover:bg-primary-500 transition duration-200">
         <i class="fas fa-plus"></i>
     </a>
-    {% endblock %}
+{% endblock %}
