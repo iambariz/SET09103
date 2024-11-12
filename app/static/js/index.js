@@ -60,20 +60,20 @@ function displayRecipes(recipes) {
 
     recipes.forEach(recipe => {
         const recipeCard = document.createElement("div");
-        recipeCard.classList.add("flex", "flex-col", "border-2", "border-primary-500", "rounded-md", "max-w-[300px]", "relative");
+        recipeCard.classList.add("flex", "flex-col", "border-2", "border-primary-500", "rounded-md", "max-w-[300px]", "relative", "w-full");
 
         // Populate the card with data
         recipeCard.innerHTML = `
             <div class="max-w-[300px] w-full max-h-[185px] h-full">
-                <img class="object-cover rounded-t-md" src="${recipe.image}" alt="${recipe.title}">
+                <img class="object-cover rounded-t-md h-full w-full" src="${recipe.image}" alt="${recipe.title}">
             </div>
             <div class="text-left m-2">
-                <h3 class="text-2xl text-primary-600 font-medium pb-3">${recipe.title}</h3>
+                <h3 class="text-xl text-primary-600 font-medium pb-3 truncate overflow-hidden whitespace-nowrap">${recipe.title}</h3>
                 <div class="mr-[2rem]">
                     ${getTags(recipe)}
                 </div>
             </div>
-            <a href="#" class="text-primary-800 absolute text-2xl right-1 top-1">
+            <a href="javascript:void(0);" onclick="saveRecipe(${recipe.id})" class="text-primary-800 absolute text-2xl right-1 top-1">
                 <i class="fa-regular fa-heart"></i>
             </a>
             <a href="/recipes/${recipe.id}" class="text-primary-800 absolute text-2xl right-1 bottom-1">
@@ -85,7 +85,6 @@ function displayRecipes(recipes) {
     });
 }
 
-// Function to generate tags like Vegetarian, Breakfast, etc.
 function getTags(recipe) {
     let tagsHtml = "";
     const tags = ["Vegetarian", "Breakfast"];
@@ -95,3 +94,24 @@ function getTags(recipe) {
     return tagsHtml;
 }
 
+function saveRecipe(recipeId) {
+    // const folderId = document.getElementById("folder-select").value;
+    const folderId = 2;  // Hardcoded
+    fetch('/api/save_recipe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            folder_id: folderId,
+            recipe: { id: recipeId }
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            alert(data.message);
+        } else {
+            console.error(data.error || "Error saving recipe");
+        }
+    })
+    .catch(error => console.error("Error:", error));
+}
