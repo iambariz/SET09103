@@ -65,7 +65,7 @@ function displayRecipes(recipes) {
         // Populate the card with data
         recipeCard.innerHTML = `
             <div class="max-w-[300px] w-full max-h-[185px] h-full">
-                <img class="object-cover rounded-t-md h-full w-full" src="${recipe.image}" alt="${recipe.title}">
+                <img class="object-cover rounded-t-md h-full w-full" src="${recipe.img_url}" alt="${recipe.title}">
             </div>
             <div class="text-left m-2">
                 <h3 class="text-xl text-primary-600 font-medium pb-3 truncate overflow-hidden whitespace-nowrap">${recipe.title}</h3>
@@ -87,10 +87,12 @@ function displayRecipes(recipes) {
 
 function getTags(recipe) {
     let tagsHtml = "";
-    const tags = ["Vegetarian", "Breakfast"];
-    tags.forEach(tag => {
-        tagsHtml += `<span class="px-2 py-1 bg-primary-500 text-white-100 rounded-lg text-xs font-normal">${tag}</span> `;
-    });
+    const tags = recipe.dish_types;
+
+    // Limit the number of tags to display to 3 
+    for(let i = 0; i < tags.length && i < 3; i++) {
+        tagsHtml += `<span class="px-2 py-1 bg-primary-500 text-white-100 rounded-lg text-xs font-normal">${tags[i]}</span> `;
+    }
     return tagsHtml;
 }
 

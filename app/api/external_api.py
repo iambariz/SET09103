@@ -1,25 +1,31 @@
 # app/api/external_api.py
 import requests
 from flask import current_app
-
+from ..models import Recipe
 
 def fetch_recipes(ingredients):
 
     # Todo: Delete this once it goes to prod
 
-    return get_sample_return()
+    # return get_sample_return()
 
     url = "https://api.spoonacular.com/recipes/findByIngredients"
     params = {
         "ingredients": ingredients,  # Comma-separated ingredients
-        "number": 5,  # Limit number of results (you can adjust this)
+        "number": 5,
         "apiKey": current_app.config["SPOONACULAR_API_KEY"],
     }
     response = requests.get(url, params=params)
 
     # Check if the response was successful
     if response.status_code == 200:
-        return response.json()
+        # Get the details of the recipes
+        recipes = response.json()
+        recipe_ids = [recipe["id"] for recipe in recipes]
+
+        # Fetch or create Recipe instances
+        recipes = Recipe.get_bulk_recipe_information(recipe_ids)
+        return recipes
     else:
         # Return an error message if the API request fails
         return {"error": "Failed to fetch recipes"}
@@ -376,3 +382,35 @@ def get_sample_return():
             ],
         },
     ]
+
+def get_recipe_information(recipe_id):
+    url = f"https://api.spoonacular.com/recipes/{recipe_id}/information"
+    params = {
+        "apiKey": current_app.config["SPOONACULAR_API_KEY"],
+    }
+    response = requests.get(url, params=params)
+
+    # Check if the response was successful
+    if response.status_code == 200:
+        return response.json()
+    else:
+        # Return an error message if the API request fails
+        return {"error": "Failed to fetch recipe information"}
+
+
+def get_bulk_recipe_information(recipe_ids):
+    url = "https://api.spoonacular.com/recipes/informationBulk"
+    params = {
+        "ids": ",".join(map(str, recipe_ids)),
+        "apiKey": current_app.config["SPOONACULAR_API_KEY"],
+    }
+    response = requests.get(url, params=params)
+
+    # Check if the response was successful
+    if response.status_code == 200:
+        return response.json()
+    else:
+        # Return an error message if the API request fails
+        return {"error": "Failed to fetch recipe information"}
+
+

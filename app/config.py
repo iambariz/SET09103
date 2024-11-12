@@ -8,3 +8,4 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SPOONACULAR_API_KEY = os.getenv('SPOONACULAR_API_KEY')
     SECRET_KEY = os.getenv('SECRET_KEY')
+    ENV = os.getenv('FLASK_ENV')

@@ -8,6 +8,7 @@ from .extensions import db, migrate
 from .routes.auth import auth_bp
 from .routes.main import main_bp
 from .routes.folders import folders_bp
+from .routes.recipe import recipe_bp
 from flask_login import LoginManager
 
 # Define LoginManager globally
@@ -31,6 +32,7 @@ def create_app():
     app.register_blueprint(auth_bp)
     app.register_blueprint(main_bp)
     app.register_blueprint(folders_bp)
+    app.register_blueprint(recipe_bp)
 
     return app
 

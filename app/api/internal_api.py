@@ -22,7 +22,15 @@ def get_recipes():
         return jsonify({"error": "No ingredients provided"}), 400
 
     recipes = fetch_recipes(ingredients)
-    return jsonify(recipes)
+
+    # Check if there was an error fetching recipes
+    if isinstance(recipes, dict) and 'error' in recipes:
+        return jsonify(recipes), 500
+
+    # Convert Recipe objects to dictionaries
+    recipes_data = [recipe.to_dict() for recipe in recipes]
+
+    return jsonify(recipes_data)
 
 @internal_api_bp.route('/api/save_recipe_to_folder', methods=['POST'])
 @login_required
