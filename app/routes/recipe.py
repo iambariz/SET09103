@@ -17,13 +17,14 @@ recipe_bp = Blueprint('recipes', __name__, url_prefix='/recipes')
 
 @recipe_bp.route('/<int:id>', methods=['GET'])
 def folder_detail(id):
-    pprint.pprint("test")
-
-    # Debug
-    print("Recipe ID: {id}")
-    recipes = Recipe.query.all()
-    return jsonify(recipes)
-
-
     recipe = Recipe.query.get_or_404(id)
-    return render_template('pages/recipes/recipe.html', recipe=recipe.get_recipe_info())
+
+    # Ensure recipe information is up-to-date
+    recipe_info = recipe.get_recipe_info()
+
+    # Convert the recipe to a dictionary
+    recipe_data = recipe_info.to_dict()
+
+    # Render the template with the recipe data
+    return render_template('pages/recipe/recipe.html', recipe=recipe_data)
+

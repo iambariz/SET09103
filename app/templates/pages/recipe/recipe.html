@@ -1,7 +1,44 @@
 {% extends "_base.html" %}
 
-{% block title %}Folders - MealPal{% endblock %}
+{% block title %}recipe.title - MealPal{% endblock %}
 
 {% block content %}
-{{ recipe | pprint }}
+    <div class="recipe-container text-primary-600">
+        <!-- Recipe Image -->
+        <div class="flex justify-center items-center">
+            <img class="max-w-[500px] max-h-[500px] w-full h-full" src="{{ recipe.img_url }}" alt="{{ recipe.title }}" class="recipe-image">
+        </div>
+
+        <h1 class="text-2xl mt-4">{{ recipe.title }}</h1>
+
+        {% if recipe.dish_types %}
+        <div class="dish-types flex flex-row my-2 gap-x-2">
+            {% for type in recipe.dish_types %}
+                <span class="px-2 py-1 bg-primary-500 text-white-100 rounded-lg text-xs font-normal">{{ type }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <p><span class="font-medium">Ready in:</span> {{ recipe.ready_in }} minutes</p>
+        <p><span class="font-medium">Servings:</span> {{ recipe.servings }} servings</p>
+
+
+
+        <h2 class="xl mt-4 font-medium">Ingredients</h2>
+        <ul class="ingredients-list ml-4">
+            {% for ingredient in recipe.ingredients %}
+                <li>
+                    {{ ingredient.amount }} {{ ingredient.unit }} {{ ingredient.name }}
+                </li>
+            {% endfor %}
+        </ul>
+
+        <h2 class="xl mt-4 font-medium">Instructions</h2>
+
+        <p>{{ recipe.instructions }}</p>
+
+        <div class="flex justify-end mt-4">
+            <p><a class="btn btn-primary" href="{{ recipe.source }}" target="_blank" rel="noopener noreferrer">See Original Recipe</a></p>
+        </div>
+    </div>
 {% endblock %}
