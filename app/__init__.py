@@ -10,6 +10,7 @@ from .routes.main import main_bp
 from .routes.folders import folders_bp
 from .routes.recipe import recipe_bp
 from flask_login import LoginManager
+from flask_wtf.csrf import CSRFProtect
 
 # Define LoginManager globally
 login_manager = LoginManager()
@@ -18,6 +19,7 @@ login_manager.login_view = "auth.login"
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
+    csrf = CSRFProtect(app)
 
     # Initialize LoginManager
     login_manager.init_app(app)

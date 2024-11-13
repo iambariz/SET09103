@@ -58,7 +58,7 @@
                         <i class="fa-regular fa-heart"></i>
                         </a>
                     <a href='#' class="text-primary-800 absolute text-2xl right-1 bottom-1">
-                        <i class="fas fa-arrow-alt-circle-right"></i>
+                        <i class="fas fa-arrow-alt-circle-right"></i>folder_detail
                     </a>
                 </div> -->
             </div>
@@ -69,6 +69,25 @@
     </div>
 {% endblock %}
 
+{% block modal %}
+ <div id="modal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 ">
+    <div class="relative bg-gray-800 rounded-lg w-3/4 max-w-lg p-8">
+        <i id="close-modal"  class="fas fa-times text-xl cursor-pointer absolute top-2 right-2 text-white-0 hover:text-white-50"></i>
+        <h2 class="text-xl text-white-0 text-center font-semibold mb-4">Save Recipe</h2>
+        <h3 class="text-md text-white-0 text-left font-semibold mb-2">Please choose a folder</h3>
+        <ul class="transition-colors">
+            {% for folder in folders %}
+            <li>
+              <a href="{{ url_for('internal_api.save_recipe_to_folder')}}" data-folder-id="{{ folder.id }}" class="block folder-pick text-left py-2 px-4 text-white-50 hover:bg-gray-700 rounded folder-btn">
+                {{ folder.name }}
+              </a>
+            </li>
+            {% endfor %}
+        </ul>
+        </div>
+  </div>
+{% endblock %}
 {% block scripts %}
-    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/index.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/modal.js') }}" defer></script>
 {% endblock %}

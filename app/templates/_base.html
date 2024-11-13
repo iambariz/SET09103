@@ -32,7 +32,14 @@
 
     {% include 'partials/_footer.html' %}
 
+    {% block modal %}
+    {% endblock %}
+
     {% block scripts %}
     {% endblock %}
+    <script defer>
+        document.cookie = "csrf_token={{ csrf_token() }}; path=/";
+    </script>
+    
 </body>
 </html>

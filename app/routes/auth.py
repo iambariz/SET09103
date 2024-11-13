@@ -37,13 +37,13 @@ def register():
             (User.email == form.email.data)
         ).first()
 
-        if form.password.data != form.confirm_password.data:
+        if form.password.data != form.repeat.data:
             flash('Passwords do not match.', 'error')
-            return render_template('user/register.html', form=form)
+            return render_template('pages/user/register.html', form=form)
 
         if existing_user:
             flash('Email already taken.', 'error')
-            return render_template('user/register.html', form=form)
+            return render_template('pages/user/register.html', form=form)
 
         # Create a new user instance
         new_user = User(email=form.email.data)

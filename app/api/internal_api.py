@@ -7,7 +7,7 @@ from flask_login import current_user
 from flask import jsonify, request
 from app.models import Folder, Recipe
 from app.extensions import db
-from app.utils.decorators import login_required  # Import the decorator
+from flask_login import login_required
 
 internal_api_bp = Blueprint('internal_api', __name__)
 
@@ -35,12 +35,10 @@ def get_recipes():
 @internal_api_bp.route('/api/save_recipe_to_folder', methods=['POST'])
 @login_required
 def save_recipe_to_folder():
-    # Parse JSON data
     data = request.get_json()
     folder_id = data.get("folder_id")
     recipe_id = data.get("recipe_id")
 
-    # Validate folder and recipe existence
     folder = Folder.query.get(folder_id)
     if not folder:
         return jsonify({"error": "Folder not found"}), 404
@@ -49,18 +47,15 @@ def save_recipe_to_folder():
     if not recipe:
         return jsonify({"error": "Recipe not found"}), 404
 
-    # Check if the recipe is already in the folder
     existing_association = FolderRecipe.query.filter_by(folder_id=folder_id, recipe_id=recipe_id).first()
     if existing_association:
-        return jsonify({"message": "Recipe is already in this folder"}), 200
+        return jsonify({"error": "Recipe is already in this folder"}), 400
 
-    # Create new association
     folder_recipe_association = FolderRecipe(folder=folder, recipe=recipe)
     db.session.add(folder_recipe_association)
     db.session.commit()
 
     return jsonify({"message": "Recipe added to folder successfully"}), 201
-
 @internal_api_bp.route('/api/recipes', methods=['GET'])
 def get_saved_recipes():
     recipes = Recipe.query.all()

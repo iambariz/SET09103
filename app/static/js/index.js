@@ -1,4 +1,6 @@
-document.getElementById('add-ingredient-btn').addEventListener('click', function() {
+let currentRecipeId = null;
+
+document.getElementById('add-ingredient-btn').addEventListener('click', () => {
     // Get the value of the input
     const ingredient = document.getElementById('ingredient-input').value;
     if (!ingredient) return;
@@ -27,7 +29,7 @@ document.getElementById('add-ingredient-btn').addEventListener('click', function
     document.getElementById('ingredient-input').value = '';
 });
 
-document.getElementById("recipe-search").addEventListener("click", function () {
+document.getElementById("recipe-search").addEventListener("click", () => {
     const ingredients = Array.from(document.querySelectorAll(".ingredient-item"))
                              .map(item => item.textContent)
                              .filter(value => value.trim() !== "")
@@ -54,7 +56,7 @@ document.getElementById("recipe-search").addEventListener("click", function () {
         .catch(error => console.error("Error fetching recipes:", error));
 });
 
-function displayRecipes(recipes) {
+const displayRecipes = (recipes) => {
     const resultsContainer = document.getElementById("recipe-results");
     resultsContainer.innerHTML = ""; // Clear any existing results
 
@@ -73,10 +75,10 @@ function displayRecipes(recipes) {
                     ${getTags(recipe)}
                 </div>
             </div>
-            <a href="javascript:void(0);" onclick="saveRecipe(${recipe.id})" class="text-primary-800 absolute text-2xl right-1 top-1">
-                <i class="fa-regular fa-heart"></i>
+            <a href="javascript:void(0);" onclick="saveRecipe(${recipe.id})" class="text-red-600 absolute text-2xl right-1 top-1">
+                <i class="fa-solid fa-heart-circle-plus"></i>
             </a>
-            <a href="/recipes/${recipe.id}" class="text-primary-800 absolute text-2xl right-1 bottom-1">
+            <a href="/recipes/${recipe.id}" class="text-primary-700 absolute text-2xl right-1 bottom-1">
                 <i class="fas fa-arrow-alt-circle-right"></i>
             </a>
         `;
@@ -85,7 +87,7 @@ function displayRecipes(recipes) {
     });
 }
 
-function getTags(recipe) {
+const getTags = (recipe) => {
     let tagsHtml = "";
     const tags = recipe.dish_types;
 
@@ -96,24 +98,49 @@ function getTags(recipe) {
     return tagsHtml;
 }
 
-function saveRecipe(recipeId) {
-    // const folderId = document.getElementById("folder-select").value;
-    const folderId = 2;  // Hardcoded
-    fetch('/api/save_recipe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            folder_id: folderId,
-            recipe: { id: recipeId }
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.message) {
-            alert(data.message);
-        } else {
-            console.error(data.error || "Error saving recipe");
-        }
-    })
-    .catch(error => console.error("Error:", error));
+const saveRecipe = (recipeId) => {
+    currentRecipeId = recipeId;
+    let modal = document.querySelector('#modal');
+    modal.classList.remove('hidden');
 }
+
+document.querySelectorAll('.folder-btn').forEach(button => {
+    button.addEventListener('click', (e) => {
+        e.preventDefault();
+        const folderId = button.dataset.folderId;
+        const url = button.href;  // Ensure this URL is correct
+        const csrfToken = getCookie('csrf_token');
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            credentials: 'include',
+            body: JSON.stringify({ recipe_id: currentRecipeId, folder_id: folderId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            let modal = document.querySelector('#modal');
+            modal.classList.add('hidden');
+        })
+        .catch(error => console.error('Error:', error));
+    });
+});
+
+
+const getCookie = (name) => {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.startsWith(`${name}=`)) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+};
