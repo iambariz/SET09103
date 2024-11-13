@@ -56,7 +56,3 @@ def save_recipe_to_folder():
     db.session.commit()
 
     return jsonify({"message": "Recipe added to folder successfully"}), 201
-@internal_api_bp.route('/api/recipes', methods=['GET'])
-def get_saved_recipes():
-    recipes = Recipe.query.all()
-    return jsonify([recipe.to_dict() for recipe in recipes])

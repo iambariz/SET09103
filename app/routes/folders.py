@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, request, redirect, url_for, jsonify
-from app.models import User, Folder
+from flask import Blueprint, render_template, request, redirect, url_for, flash
+from app.models import User, Folder, Recipe
 from app.extensions import db
 from flask_login import login_required, current_user
 from app.forms.folder_create_form import FolderCreateForm
@@ -69,3 +69,19 @@ def folder_delete(id):
     folder = Folder.query.get_or_404(id)
     db.session.delete(folder)
     db.session.commit()
+
+@folders_bp.route('/<int:folder_id>/delete/<int:recipe_id>', methods=['GET'])
+@login_required
+def remove_recipe_from_folder(folder_id, recipe_id):
+    folder = Folder.query.get_or_404(folder_id)
+    recipe = Recipe.query.get_or_404(recipe_id)  # Retrieve the recipe directly
+
+    # Check if the recipe exists in the folder's recipes
+    if recipe in folder.recipes:
+        folder.recipes.remove(recipe)  # Remove the recipe from the folder
+        db.session.commit()
+        flash("Recipe removed successfully.", "success")
+    else:
+        flash("Recipe not found in this folder.", "warning")
+        
+    return redirect(url_for('folders.folder_detail', id=folder.id))
