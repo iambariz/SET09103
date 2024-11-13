@@ -3,7 +3,7 @@
         <i class="fas fa-folder text-[70px] text-primary-500 py-4"></i>
         <div class="text-left flex flex-col">
             <span class="text-xl font-medium">{{ folder.name }}</span>
-            <span class="text-xs text-gray-500 mt-0">{{ folder.recipes|length }} recipes</span>
+            <span class="text-xs text-gray-500 mt-0">{{ folder.recipes.all()|length }} recipes</span>
         </div>
     </div>
     <div class="flex flex-row justify-between">

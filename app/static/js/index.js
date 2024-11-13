@@ -49,9 +49,8 @@ document.getElementById("recipe-search").addEventListener("click", () => {
                 return;
             }
 
-            // Handle the recipes data (you could display it on the page here)
-            console.log(data);  // For debugging, view the response in the console
-            displayRecipes(data);  // Function to handle rendering the recipes on the page
+            console.log(data);
+            displayRecipes(data);
         })
         .catch(error => console.error("Error fetching recipes:", error));
 });
@@ -108,7 +107,7 @@ document.querySelectorAll('.folder-btn').forEach(button => {
     button.addEventListener('click', (e) => {
         e.preventDefault();
         const folderId = button.dataset.folderId;
-        const url = button.href;  // Ensure this URL is correct
+        const url = button.href;
         const csrfToken = getCookie('csrf_token');
 
         fetch(url, {

@@ -12,3 +12,10 @@ class Folder(db.Model):
     user = db.relationship('User', back_populates='folders')
 
     folder_recipes = db.relationship('FolderRecipe', back_populates='folder')
+
+    recipes = db.relationship(
+        'Recipe',
+        secondary='folder_recipes',
+        back_populates='folders',
+        lazy='dynamic'
+    )

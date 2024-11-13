@@ -18,6 +18,19 @@ class Recipe(db.Model):
     ingredients = db.Column(db.Text, nullable=True) # Store as JSON string
     stored_at = db.Column(db.DateTime, nullable=False)
 
+    folder_recipes = db.relationship(
+        'FolderRecipe',
+        back_populates='recipe',
+        cascade='all, delete-orphan'
+    )
+
+    folders = db.relationship(
+        'Folder',
+        secondary='folder_recipes',
+        back_populates='recipes',
+        lazy='dynamic'
+    )
+    
     @property
     def dish_types_list(self):
         return json.loads(self.dish_types or '[]')

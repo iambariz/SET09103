@@ -8,4 +8,4 @@ class FolderRecipe(db.Model):
     recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'), nullable=False)
 
     folder = db.relationship("Folder", back_populates="folder_recipes")
-    recipe = db.relationship("Recipe")
+    recipe = db.relationship("Recipe", back_populates="folder_recipes")
