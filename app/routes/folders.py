@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, jsonify
 from app.models import User, Folder
 from app.extensions import db
 from flask_login import login_required, current_user
@@ -37,7 +37,15 @@ def folder_create():
 @login_required
 def folder_detail(id):
     folder = Folder.query.get_or_404(id)
-    return render_template('pages/folder/folder.html', folder=folder)
+
+    recipes = folder.recipes.all() if isinstance(folder.recipes, db.Query) else folder.recipes
+    print("Folder:", folder)
+    print("Folder Name:", folder.name)
+    print("Recipes in Folder:", folder.recipes.all() if hasattr(folder.recipes, 'all') else folder.recipes)
+    # recipes = [recipe.to_dict() for recipe in folder.recipes]  # Convert recipes to list of dictionaries
+
+    # return jsonify(recipes)
+    return render_template('pages/folder/folder.html', folder=folder, recipes=folder.recipes)
 
 @folders_bp.route('/edit/<int:id>', methods=['GET', 'POST'])
 @login_required

@@ -1,5 +1,6 @@
 # app/models/folder.py
 from ..extensions import db
+from sqlalchemy.ext.associationproxy import association_proxy
 
 class Folder(db.Model):
     __tablename__ = 'folders'
@@ -11,11 +12,14 @@ class Folder(db.Model):
     # Relationship to User
     user = db.relationship('User', back_populates='folders')
 
-    folder_recipes = db.relationship('FolderRecipe', back_populates='folder')
 
-    recipes = db.relationship(
-        'Recipe',
-        secondary='folder_recipes',
-        back_populates='folders',
-        lazy='dynamic'
+    # Relationship to FolderRecipe
+    folder_recipes = db.relationship(
+        'FolderRecipe',
+        back_populates='folder',
+        cascade='all, delete-orphan'
     )
+
+    # Association Proxy to access recipes directly
+    recipes = association_proxy('folder_recipes', 'recipe')
+

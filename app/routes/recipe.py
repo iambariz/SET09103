@@ -16,7 +16,7 @@ recipe_bp = Blueprint('recipes', __name__, url_prefix='/recipes')
 
 
 @recipe_bp.route('/<int:id>', methods=['GET'])
-def folder_detail(id):
+def recipe_detail(id):
     recipe = Recipe.query.get_or_404(id)
 
     # Ensure recipe information is up-to-date

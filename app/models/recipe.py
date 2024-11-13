@@ -2,6 +2,7 @@ import json
 from datetime import datetime, timedelta, timezone
 from ..extensions import db
 from flask import current_app
+from sqlalchemy.ext.associationproxy import association_proxy
 
 class Recipe(db.Model):
     __tablename__ = 'recipes'
@@ -22,13 +23,6 @@ class Recipe(db.Model):
         'FolderRecipe',
         back_populates='recipe',
         cascade='all, delete-orphan'
-    )
-
-    folders = db.relationship(
-        'Folder',
-        secondary='folder_recipes',
-        back_populates='recipes',
-        lazy='dynamic'
     )
     
     @property
