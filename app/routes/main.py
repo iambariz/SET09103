@@ -1,8 +1,6 @@
-# app/routes/main.py
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, flash
 from flask_login import current_user
 
-# Define the Blueprint
 main_bp = Blueprint('main', __name__)
 
 # Index route
@@ -13,6 +11,7 @@ def index():
         folders = current_user.folders
     else:
         folders = []
+
     return render_template('index.html', is_authenticated=current_user.is_authenticated, current_user=current_user, folders=folders)
 
 @main_bp.route('/privacy')

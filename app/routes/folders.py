@@ -63,12 +63,14 @@ def folder_edit(id):
     return render_template('pages/folder/create.html', form=form, folder=folder)
 
 
-@folders_bp.route('/delete/<int:id>', methods=['POST'])
+@folders_bp.route('/delete/<int:id>', methods=['GET'])
 @login_required
 def folder_delete(id):
     folder = Folder.query.get_or_404(id)
     db.session.delete(folder)
     db.session.commit()
+    flash("Folder deleted successfully.", "success")
+    return redirect(url_for('folders.folder_index'))
 
 @folders_bp.route('/<int:folder_id>/delete/<int:recipe_id>', methods=['GET'])
 @login_required

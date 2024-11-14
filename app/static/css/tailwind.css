@@ -71,3 +71,48 @@ div:has(> input[type="checkbox"]) {
 .btn-danger {
     @apply bg-red-600 border-red-600 hover:bg-red-500 hover:border-red-500 text-white-50;
 }
+
+.snackbar {
+    visibility: hidden;
+    min-width: 275px;
+    position: fixed;
+    left: 50%;
+    top: 75px;
+    transform: translateX(-50%);
+    z-index: 1000;
+    @apply  text-white-50 text-center px-2 py-2 rounded-lg font-normal bg-primary-600;
+}
+
+.snackbar.error {
+    @apply bg-red-600;
+}
+
+/* Snackbar animation */
+
+.snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 1.0s 3.0s;
+    animation: fadein 0.5s, fadeout 1.0s 3.0s;
+}
+
+/* Keyframes for fadein */
+@-webkit-keyframes fadein {
+    from { top: 0; opacity: 0; }
+    to { top: 75px; opacity: 1; }
+}
+
+@keyframes fadein {
+    from { top: 0; opacity: 0; }
+    to { top: 75px; opacity: 1; }
+}
+
+/* Keyframes for fadeout */
+@-webkit-keyframes fadeout {
+    from { top: 75px; opacity: 1; }
+    to { top: 0; opacity: 0; }
+}
+
+@keyframes fadeout {
+    from { top: 75px; opacity: 1; }
+    to { top: 0; opacity: 0; }
+}
