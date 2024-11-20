@@ -36,7 +36,7 @@ document.getElementById("recipe-search").addEventListener("click", () => {
                              .join(",");
 
     if (!ingredients) {
-        alert("Please add at least one ingredient.");
+        showSnackbarWithMessage("Please add at least one ingredient.", "error");
         return;
     }
 
@@ -45,17 +45,21 @@ document.getElementById("recipe-search").addEventListener("click", () => {
         .then(response => response.json())
         .then(data => {
             if (data.error) {
-                alert(data.error);
+                showSnackbarWithMessage(data.error, "error");
                 return;
             }
-
-            console.log(data);
             displayRecipes(data);
         })
-        .catch(error => console.error("Error fetching recipes:", error));
+        .catch(error => adjustSnackbarMessage(error));
 });
 
 const displayRecipes = (recipes) => {
+
+    if(recipes.length === 0) {
+        showSnackbarWithMessage("No recipes found. Try adding different ingredients.", "error");
+        return;
+    }
+
     const resultsContainer = document.getElementById("recipe-results");
     resultsContainer.innerHTML = ""; // Clear any existing results
 
@@ -123,8 +127,13 @@ document.querySelectorAll('.folder-btn').forEach(button => {
         .then(data => {
             let modal = document.querySelector('#modal');
             modal.classList.add('hidden');
+            if(data.error) {
+                showSnackbarWithMessage(data.error, "error");
+            }else{
+                showSnackbarWithMessage(data.message, "success");
+            }
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => showSnackbarWithMessage("Something went wrong, please try again later.", "error"));
     });
 });
 

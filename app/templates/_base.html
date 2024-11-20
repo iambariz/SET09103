@@ -21,6 +21,9 @@
         {% endfor %}
     {% endif %}
     {% endwith %}
+    <div id="snackbar-notification" class="snackbar">
+        
+    </div>
 
     <div class="flex flex-1 w-full h-full relative">
         <main class="container mx-auto p-4 flex-grow flex-1 height-100 ">
@@ -34,8 +37,12 @@
     {% block modal %}
     {% endblock %}
 
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer ></script>
+    <script defer>
+            document.cookie = "csrf_token={{ csrf_token() }}; path=/";
+    </script>
     {% block scripts %}
     {% endblock %}
-    <script src="{{ url_for('static', filename='js/main.js') }}" defer ></script>
+    
 </body>
 </html>

@@ -26,6 +26,7 @@ def folder_create():
         # Add the new folder to the session and commit
         db.session.add(new_folder)
         db.session.commit()
+        flash("Folder created successfully.", "success")
 
         # Redirect to the folder's detail page after creation
         return redirect(url_for('folders.folder_detail', id=new_folder.id))
@@ -39,9 +40,9 @@ def folder_detail(id):
     folder = Folder.query.get_or_404(id)
 
     recipes = folder.recipes.all() if isinstance(folder.recipes, db.Query) else folder.recipes
-    print("Folder:", folder)
-    print("Folder Name:", folder.name)
-    print("Recipes in Folder:", folder.recipes.all() if hasattr(folder.recipes, 'all') else folder.recipes)
+    # print("Folder:", folder)
+    # print("Folder Name:", folder.name)
+    # print("Recipes in Folder:", folder.recipes.all() if hasattr(folder.recipes, 'all') else folder.recipes)
     # recipes = [recipe.to_dict() for recipe in folder.recipes]  # Convert recipes to list of dictionaries
 
     # return jsonify(recipes)
@@ -57,6 +58,7 @@ def folder_edit(id):
         # Update folder data with form data
         folder.name = form.name.data
         db.session.commit()
+        flash("Folder updated successfully.", "success")
         return redirect(url_for('folders.folder_detail', id=folder.id))
 
     # Render the same template as 'create' but passing 'form' and 'folder'

@@ -1427,15 +1427,16 @@ div:has(> input[type="checkbox"]) > :not([hidden]) ~ :not([hidden]) {
   top: 75px;
   transform: translateX(-50%);
   z-index: 1000;
+  width: 100%;
+  max-width: 32rem;
   border-radius: 0.5rem;
   --tw-bg-opacity: 1;
   background-color: rgb(24 33 64 / var(--tw-bg-opacity));
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
   text-align: center;
-  font-weight: 400;
   --tw-text-opacity: 1;
   color: rgb(234 234 234 / var(--tw-text-opacity));
 }
