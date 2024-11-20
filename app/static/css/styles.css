@@ -767,6 +767,18 @@ video {
   width: 100%;
 }
 
+.w-auto {
+  width: auto;
+}
+
+.min-w-\[100px\] {
+  min-width: 100px;
+}
+
+.min-w-0 {
+  min-width: 0px;
+}
+
 .max-w-64 {
   max-width: 16rem;
 }
@@ -795,12 +807,28 @@ video {
   max-width: 32rem;
 }
 
+.max-w-\[70\%\] {
+  max-width: 70%;
+}
+
+.max-w-full {
+  max-width: 100%;
+}
+
 .flex-1 {
   flex: 1 1 0%;
 }
 
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
 .flex-grow {
   flex-grow: 1;
+}
+
+.flex-grow-0 {
+  flex-grow: 0;
 }
 
 .translate-x-1\/2 {
@@ -857,6 +885,10 @@ video {
 
 .gap-y-4 {
   row-gap: 1rem;
+}
+
+.gap-y-2 {
+  row-gap: 0.5rem;
 }
 
 .space-x-4 > :not([hidden]) ~ :not([hidden]) {
@@ -1510,6 +1542,13 @@ div:has(> input[type="checkbox"]) > :not([hidden]) ~ :not([hidden]) {
   outline-offset: 2px;
 }
 
+@media (min-width: 640px) {
+  .sm\:gap-x-6 {
+    -moz-column-gap: 1.5rem;
+         column-gap: 1.5rem;
+  }
+}
+
 @media (min-width: 768px) {
   .md\:flex {
     display: flex;
@@ -1521,5 +1560,29 @@ div:has(> input[type="checkbox"]) > :not([hidden]) ~ :not([hidden]) {
 
   .md\:flex-row {
     flex-direction: row;
+  }
+
+  .md\:justify-start {
+    justify-content: flex-start;
+  }
+
+  .md\:justify-center {
+    justify-content: center;
+  }
+
+  .md\:gap-x-6 {
+    -moz-column-gap: 1.5rem;
+         column-gap: 1.5rem;
+  }
+
+  .md\:text-left {
+    text-align: left;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:gap-x-6 {
+    -moz-column-gap: 1.5rem;
+         column-gap: 1.5rem;
   }
 }

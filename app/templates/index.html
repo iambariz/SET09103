@@ -8,27 +8,28 @@
 
 
         <!-- Search bar starts -->
-         <div class="container">
-            <h1 class="text-4xl font-normal text-primary-600 ">What's in your kitchen?</h1>
-            <div class="mt-2 border-2 mx-auto max-w-[750px] bg-white-600 h-10 border-primary-600 rounded-lg flex flex-row justify-between">
-                <!-- Items zone -->
-                <input placeholder="Type in an ingredient" class="ml-2 bg-white-600 border-primary-600 focus:outline-none focus:border-none" type="text" id="ingredient-input">
-                 <!-- Buttons -->
-                <div class="flex flex-row justify-center text-secondary-500 bg-primary-600 text-xl" id="recipe-add">
-                    <div class="flex justify-center items-center w-[55px] cursor-pointer border-r-2 border-r-primary-300" id="add-ingredient-btn">
-                        <i class="fas fa-plus"></i>
-                    </div>
-                    <div class="flex justify-center items-center w-[55px] cursor-pointer" id="recipe-search">
-                        <i class="fas fa-search"></i>
-                    </div>
-                </div>
+        <div class="mt-2 border-2 mx-auto h-10 max-w-[750px] bg-white-600 border-primary-600 rounded-lg flex flex-row items-center w-full">
+        <!-- Items zone -->
+        <input placeholder="Type in an ingredient" 
+               class="ml-2 bg-white-600 border-primary-600 focus:outline-none focus:border-none flex-grow min-w-0 w-full" 
+               type="text" id="ingredient-input"
+    >
+        <!-- Buttons -->
+        <div class="flex h-full flex-row justify-center items-center text-secondary-500 bg-primary-600 text-xl flex-shrink-0 w-auto" id="recipe-add" >
+            <div class="flex justify-center items-center w-[55px] cursor-pointer border-r-2 border-r-primary-300" id="add-ingredient-btn">
+                <i class="fas fa-plus" aria-hidden="true"></i>
             </div>
-         </div>
+            <div class="flex justify-center items-center w-[55px] cursor-pointer" id="recipe-search">
+                <i class="fas fa-search" aria-hidden="true"></i>
+            </div>
+        </div>
+    </div>
+    
         <!-- Search bar finishes -->
 
         <!-- Ingredients starts -->
 
-        <div class="m-2 flex flex-row gap-x-2" id="ingredients-container">
+        <div class="m-2 flex flex-row gap-x-2 max-w-[750px] mx-auto w-full flex-wrap gap-y-2" id="ingredients-container">
             <!-- <div class="rounded-lg py-2 px-5 bg-secondary-500 text-primary-600 relative text-medium">
                 <span>Eggs</span>
                 <i class="fas fa-times cursor-pointer font-weight-500 absolute text-sm top-1 right-1" class="remove-ingredient"></i>
@@ -39,10 +40,10 @@
 
         <!-- Recipes starts -->
          <div class="container-2xl pt-20">
-            <h2 class="text-left pb-4 text-3xl text-primary-500 font-medium">Handpicked recipes for you</h2>
+            <h2 class="text-center md:text-left pb-4 text-3xl text-primary-500 font-medium">Handpicked recipes for you</h2>
 
             <!-- Recipe container starts -->
-            <div class="flex flex-row flex-wrap gap-x-6 gap-y-4" id="recipe-results">
+            <div class="flex flex-row flex-wrap gap-y-4 justify-center md:justify-start" id="recipe-results">
                 <p id="no-recipes" class="text-gray-500 w-full text-center">Add ingredients to see matching recipes.</p>
 
                 <!-- <div class="flex flex-col border-2 border-primary-500 rounded-md max-w-[300px] relative">

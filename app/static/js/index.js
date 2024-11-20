@@ -5,25 +5,7 @@ document.getElementById('add-ingredient-btn').addEventListener('click', () => {
     const ingredient = document.getElementById('ingredient-input').value;
     if (!ingredient) return;
 
-    // Create the new ingredient div
-    const ingredientDiv = document.createElement('div');
-    ingredientDiv.className = "rounded-lg py-2 px-5 bg-secondary-500 text-primary-600 relative text-medium ingredient-item";
-
-    // Create the span for the ingredient name
-    const ingredientSpan = document.createElement('span');
-    ingredientSpan.textContent = ingredient;
-    ingredientDiv.appendChild(ingredientSpan);
-
-    // Create the remove icon
-    const removeIcon = document.createElement('i');
-    removeIcon.className = "fas fa-times cursor-pointer font-weight-500 absolute text-sm top-1 right-1";
-    removeIcon.onclick = function() {
-        ingredientDiv.remove();
-    };
-    ingredientDiv.appendChild(removeIcon);
-
-    // Append the new ingredient div to the container
-    document.getElementById('ingredients-container').appendChild(ingredientDiv);
+    displayIngredient(ingredient)
 
     // Clear the input field
     document.getElementById('ingredient-input').value = '';
@@ -48,9 +30,14 @@ document.getElementById("recipe-search").addEventListener("click", () => {
                 showSnackbarWithMessage(data.error, "error");
                 return;
             }
+            saveToLocalStorage("recentRecipes", data);
+            saveToLocalStorage("recentIngredient", ingredients);
             displayRecipes(data);
         })
-        .catch(error => adjustSnackbarMessage(error));
+        .catch(error => {
+            showSnackbarWithMessage("Oops something went wrong. Please try again.", "error")
+            console.log(error)
+        });
 });
 
 const displayRecipes = (recipes) => {
@@ -60,16 +47,27 @@ const displayRecipes = (recipes) => {
         return;
     }
 
+    const hasFolders = document.querySelector('.folder-btn');
+
     const resultsContainer = document.getElementById("recipe-results");
     resultsContainer.innerHTML = ""; // Clear any existing results
 
     recipes.forEach(recipe => {
         const recipeCard = document.createElement("div");
-        recipeCard.classList.add("flex", "flex-col", "border-2", "border-primary-500", "rounded-md", "max-w-[300px]", "relative", "w-full");
+        recipeCard.classList.add("flex", "flex-col", "border-2", "border-primary-500", "rounded-md", "max-w-[300px]", "relative", "w-full", "mx-4");
 
         // Populate the card with data
+        let folderAction = "";
+
+        if (hasFolders) {
+            folderAction = `
+                <a href="javascript:void(0);" onclick="saveRecipe(${recipe.id})" class="text-red-600 absolute text-2xl right-1 top-1">
+                    <i class="fa-solid fa-heart-circle-plus"></i>
+                </a>`;
+        }
+
         recipeCard.innerHTML = `
-            <div class="max-w-[300px] w-full max-h-[185px] h-full">
+            <div class="max-w-[300px]w-full max-h-[185px] h-full">
                 <img class="object-cover rounded-t-md h-full w-full" src="${recipe.img_url}" alt="${recipe.title}">
             </div>
             <div class="text-left m-2">
@@ -78,13 +76,12 @@ const displayRecipes = (recipes) => {
                     ${getTags(recipe)}
                 </div>
             </div>
-            <a href="javascript:void(0);" onclick="saveRecipe(${recipe.id})" class="text-red-600 absolute text-2xl right-1 top-1">
-                <i class="fa-solid fa-heart-circle-plus"></i>
-            </a>
+            ${folderAction}
             <a href="/recipes/${recipe.id}" class="text-primary-700 absolute text-2xl right-1 bottom-1">
                 <i class="fas fa-arrow-alt-circle-right"></i>
             </a>
         `;
+
 
         resultsContainer.appendChild(recipeCard);
     });
@@ -152,3 +149,52 @@ const getCookie = (name) => {
     }
     return cookieValue;
 };
+
+const saveToLocalStorage = (key, data) => {
+    localStorage.setItem(key, JSON.stringify(data));
+};
+
+//Loading recipes
+
+document.addEventListener("DOMContentLoaded", () => {
+    const recentRecipes = loadFromLocalStorage("recentRecipes");
+    const recentIngredients = loadFromLocalStorage("recentIngredient");
+
+    if(recentIngredients){
+        const recentIngredientsList = recentIngredients.split(",");
+        recentIngredientsList.forEach(ingredient => {
+            displayIngredient(ingredient)
+        });
+    }
+
+    if (recentRecipes) {
+        displayRecipes(recentRecipes);
+    }
+});
+
+const loadFromLocalStorage = (key) => {
+    const data = localStorage.getItem(key);
+    return data ? JSON.parse(data) : null;
+};
+
+const displayIngredient = (ingredient) => {
+    // Create the new ingredient div
+    const ingredientDiv = document.createElement('div');
+    ingredientDiv.className = "rounded-lg py-2 px-5 bg-secondary-500 text-primary-600 relative text-medium ingredient-item";
+
+    // Create the span for the ingredient name
+    const ingredientSpan = document.createElement('span');
+    ingredientSpan.textContent = ingredient;
+    ingredientDiv.appendChild(ingredientSpan);
+
+    // Create the remove icon
+    const removeIcon = document.createElement('i');
+    removeIcon.className = "fas fa-times cursor-pointer font-weight-500 absolute text-sm top-1 right-1";
+    removeIcon.onclick = function() {
+        ingredientDiv.remove();
+    };
+    ingredientDiv.appendChild(removeIcon);
+
+    // Append the new ingredient div to the container
+    document.getElementById('ingredients-container').appendChild(ingredientDiv);
+}
