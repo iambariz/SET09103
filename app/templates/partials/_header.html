@@ -22,7 +22,7 @@
           <!-- Logged In: Show Email and Logout -->
           <span class="text-sm">
             Hello, 
-            <a href="{{ url_for('auth.profile') }}"" class="text-sm text-secondary-400 font-medium">{{ current_user.email }}</span>
+            <a href="{{ url_for('auth.profile') }}" class="text-sm text-secondary-400 font-medium">{{ current_user.email }}</span>
           </span>
           <a href="{{ url_for('auth.logout') }}" class="hover:text-secondary-400 ml-4">Logout</a>
         {% else %}
@@ -39,13 +39,16 @@
     </div>
   
     <!-- Mobile Menu (Hidden by default) -->
-    <div id="mobile-menu" class="hidden md:hidden flex-col mt-2 space-y-2 bg-primary-400 p-4 rounded-lg">
+    <div id="mobile-menu" class="hidden md:hidden flex flex-col mt-2 space-y-2 p-4 rounded-lg text-white-0">
+      {% if current_user.is_authenticated %}
+        <a href="{{ url_for('auth.profile') }}" class="text-center text-secondary-400">{{ current_user.email }}</span>
+        <a href="{{ url_for('auth.profile') }}" class="hover:text-secondary-400">Profile</span>
+      {% endif %}
       <a href="{{ url_for('main.index') }}" class="hover:text-secondary-400">Home</a>
-      <a href="#" class="hover:text-secondary-400">My Recipes</a>
+      <a href="{{ url_for('folders.folder_index') }}" class="hover:text-secondary-400">My Recipes</a>
   
       <!-- Authentication Links in Mobile -->
       {% if current_user.is_authenticated %}
-        <span class="text-sm">{{ current_user.email }}</span>
         <a href="{{ url_for('auth.logout') }}" class="hover:text-secondary-400">Logout</a>
       {% else %}
         <a href="{{ url_for('auth.login') }}" class="hover:text-secondary-400">Login</a>

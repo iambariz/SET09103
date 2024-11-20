@@ -23,3 +23,12 @@ const showSnackbarWithMessage = (message, type) => {
     snackbar.textContent = message;
     showHideSnackbar(snackbar);
 }
+
+const openNavBtn = document.querySelector('#menu-toggle');
+const navBar = document.querySelector('#mobile-menu');
+
+openNavBtn.addEventListener('click', (e)=>{
+    e.preventDefault();
+    navBar.classList.toggle('hidden');
+
+});

@@ -751,6 +751,14 @@ video {
   max-height: 500px;
 }
 
+.max-h-40 {
+  max-height: 10rem;
+}
+
+.max-h-full {
+  max-height: 100%;
+}
+
 .min-h-screen {
   min-height: 100vh;
 }
@@ -1551,6 +1559,18 @@ div:has(> input[type="checkbox"]) > :not([hidden]) ~ :not([hidden]) {
 }
 
 @media (min-width: 640px) {
+  .sm\:static {
+    position: static;
+  }
+
+  .sm\:max-w-\[200px\] {
+    max-width: 200px;
+  }
+
+  .sm\:flex-row {
+    flex-direction: row;
+  }
+
   .sm\:gap-x-6 {
     -moz-column-gap: 1.5rem;
          column-gap: 1.5rem;

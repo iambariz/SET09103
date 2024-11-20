@@ -35,7 +35,7 @@
 
         <h2 class="xl mt-4 font-medium">Instructions</h2>
 
-        <p>{{ recipe.instructions }}</p>
+        <p>{{ recipe.instructions | striptags}}</p>
 
         <div class="flex justify-end mt-4">
             <p><a class="btn btn-primary" href="{{ recipe.source }}" target="_blank" rel="noopener noreferrer">See Original Recipe</a></p>
