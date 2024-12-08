@@ -1,13 +1,8 @@
-# app/api/external_api.py
 import requests
 from flask import current_app
 from ..models import Recipe
 
 def fetch_recipes(ingredients):
-
-    # Todo: Delete this once it goes to prod
-
-    # return get_sample_return()
 
     url = "https://api.spoonacular.com/recipes/findByIngredients"
     params = {

@@ -1,5 +1,3 @@
-# app/__init__.py
-
 from flask import Flask, render_template
 from .api.internal_api import internal_api_bp
 from .models import User

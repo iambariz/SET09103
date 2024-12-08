@@ -1,4 +1,3 @@
-# app/api/internal_api.py
 from flask import Blueprint, jsonify, request
 from .external_api import fetch_recipes
 from ..models import Recipe, Folder, FolderRecipe

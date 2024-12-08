@@ -39,7 +39,7 @@ def folder_create():
 def folder_detail(id):
     folder = Folder.query.get_or_404(id)
 
-    recipes = folder.recipes.all() if isinstance(folder.recipes, db.Query) else folder.recipes
+    # recipes = folder.recipes.all() if isinstance(folder.recipes, db.Query) else folder.recipes
     # print("Folder:", folder)
     # print("Folder Name:", folder.name)
     # print("Recipes in Folder:", folder.recipes.all() if hasattr(folder.recipes, 'all') else folder.recipes)

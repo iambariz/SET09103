@@ -1,4 +1,3 @@
-# app/models/folder.py
 from ..extensions import db
 from sqlalchemy.ext.associationproxy import association_proxy
 
