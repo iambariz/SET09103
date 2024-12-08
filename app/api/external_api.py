@@ -7,7 +7,7 @@ def fetch_recipes(ingredients):
     url = "https://api.spoonacular.com/recipes/findByIngredients"
     params = {
         "ingredients": ingredients,  # Comma-separated ingredients
-        "number": 5,
+        "number": 10,# Number of recipes to return - max 10 pagination is not possible due to api limitation (no pagi on Spoonacular, and if I do 20 for example, the order of the recipes will be different)
         "apiKey": current_app.config["SPOONACULAR_API_KEY"],
     }
     response = requests.get(url, params=params)
