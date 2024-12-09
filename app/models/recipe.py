@@ -60,7 +60,6 @@ class Recipe(db.Model):
     def get_bulk_recipe_information(cls, spoonacular_ids):
         from ..api.external_api import get_bulk_recipe_information
 
-        one_hour_ago = (datetime.now(timezone.utc) - timedelta(hours=1)).replace(tzinfo=None)
         # Get existing recipes from the database
         recipes = cls.query.filter(cls.spoonacular_id.in_(spoonacular_ids)).all()
         existing_recipes = {recipe.spoonacular_id: recipe for recipe in recipes}
@@ -80,7 +79,7 @@ class Recipe(db.Model):
                         # Use existing or create new Recipe instance
                         recipe = existing_recipes.get(spoonacular_id)
                         if not recipe:
-                            recipe = cls(spoonacular_id=spoonacular_id)
+                            recipe = cls(spoonacular_id=spoonacular_id, stored_at=datetime.now(timezone.utc))
                             db.session.add(recipe)
                         recipe.update_recipe_details(recipe_info)
                         existing_recipes[spoonacular_id] = recipe
