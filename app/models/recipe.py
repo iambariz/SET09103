@@ -17,7 +17,7 @@ class Recipe(db.Model):
     img_url = db.Column(db.String(255), nullable=True)
     dish_types = db.Column(db.Text, nullable=True)  # Store as JSON string
     ingredients = db.Column(db.Text, nullable=True) # Store as JSON string
-    stored_at = db.Column(db.DateTime, nullable=False)
+    stored_at = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
 
     folder_recipes = db.relationship(
         'FolderRecipe',
@@ -131,4 +131,10 @@ class Recipe(db.Model):
         from flask import current_app
         one_hour_ago = datetime.now(timezone.utc) - timedelta(hours=1)
         is_dev_env = current_app.config.get("ENV") == "development"
-        return stored_at is None or (not is_dev_env and stored_at < one_hour_ago)
+
+        # Normalize stored_at to UTC timezone so it will be comparable - Legacy data may not have timezone info
+        if stored_at is not None and stored_at.tzinfo is None:
+            stored_at = stored_at.replace(tzinfo=timezone.utc)
+
+        return stored_at is None or (stored_at < one_hour_ago if not is_dev_env else False)
+
